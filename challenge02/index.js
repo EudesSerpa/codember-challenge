@@ -6,49 +6,45 @@ const INIT_CODE_A_TO_C = 9;
 const CODE_LENGTH_D_TO_Z = 3; // 100 - 122
 const INIT_CODE_D_TO_Z = 1;
 
-const decodeLetter = ({ idx, code, wordCodes }) => {
-  let newIdx = idx;
-  let charCodes = [];
+const decodeLetter = (idx, code, asciiWord) => {
+  let letterCode = "";
 
   if (code === INIT_CODE_A_TO_C) {
-    charCodes = wordCodes.slice(idx, idx + CODE_LENGTH_A_TO_C);
-    newIdx += CODE_LENGTH_A_TO_C;
-  } else if (code === INIT_CODE_D_TO_Z) {
-    charCodes = wordCodes.slice(idx, idx + CODE_LENGTH_D_TO_Z);
-    newIdx += CODE_LENGTH_D_TO_Z;
+    letterCode = asciiWord.substring(idx, idx + CODE_LENGTH_A_TO_C);
+    idx += CODE_LENGTH_A_TO_C;
   }
 
-  const decodedLetter = String.fromCharCode(charCodes.join(""));
-  return [decodedLetter, newIdx - 1];
+  if (code === INIT_CODE_D_TO_Z) {
+    letterCode = asciiWord.substring(idx, idx + CODE_LENGTH_D_TO_Z);
+    idx += CODE_LENGTH_D_TO_Z;
+  }
+
+  const decodedLetter = String.fromCharCode(letterCode);
+
+  return [decodedLetter, idx - 1];
 };
 
 const decodeWord = (asciiWord) => {
-  const wordCodes = asciiWord.split("");
-  const wordDecoded = [];
+  let decodedWord = "";
 
-  for (let idx = 0; idx < wordCodes.length; idx++) {
-    const code = Number(wordCodes[idx]);
+  for (let idx = 0; idx < asciiWord.length; idx++) {
+    const init_code = Number(asciiWord.at(idx));
 
-    const [letter, newIdx] = decodeLetter({ idx, code, wordCodes });
-
+    const [decodedLetter, newIdx] = decodeLetter(idx, init_code, asciiWord);
     idx = newIdx;
-    wordDecoded.push(letter);
+
+    decodedWord += decodedLetter;
   }
 
-  return wordDecoded.join("");
+  return decodedWord + " ";
 };
 
-const decodeMessage = (message) => {
-  const asciiWords = message.split(" ");
-  const wordsDecoded = [];
-
-  asciiWords.forEach((asciiWord) => {
-    wordsDecoded.push(decodeWord(asciiWord));
-    wordsDecoded.push(" ");
-  });
-
-  return wordsDecoded.join("").trim();
-};
+const decodeMessage = (message) =>
+  message
+    .split(" ")
+    .map((asciiWord) => decodeWord(asciiWord))
+    .join("")
+    .trim();
 
 const decodedMessage = decodeMessage(codedMessage);
 console.log(decodedMessage);
