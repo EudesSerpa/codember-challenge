@@ -2,7 +2,7 @@
 
 ## Descripion
 
-Un amigo compró 5 BitCoins en 2008. El problema es que lo tenía en un monedero digital... ¡y no se acuerda de la contraseña! Nos ha pedido ayuda. Y nos ha dado algunas pistas. [Puedes verlas en la seccion de Consideraciones]("#consideraciones).
+Un amigo compró 5 BitCoins en 2008. El problema es que lo tenía en un monedero digital... ¡y no se acuerda de la contraseña! Nos ha pedido ayuda. Y nos ha dado algunas pistas. [Puedes verlas en la seccion de Consideraciones](#consideraciones).
 
 Dice que el password está entre los números 11098 y 98123. ¿Le podemos decir cuantos números cumplen las reglas dentro de ese rango?, y aquel en el indice 55 de dicha lista?
 
